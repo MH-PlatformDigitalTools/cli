@@ -23,3 +23,11 @@ func RetrieveJobFromTaskID(taskID string, settings *models.Settings) *models.Job
 	json.Unmarshal(resp, &job)
 	return &job
 }
+
+// RetrieveRunningJobs fetches all running jobs for a service
+func RetrieveRunningJobs(serviceID string, settings *models.Settings) *map[string]models.Job {
+	resp := httpclient.Get(fmt.Sprintf("http://mgmt01.sbox05.catalyzeapps.com:8000/services/cac8cc32-8f05-463e-b4f3-dbcfc2af9329/jobs?status=running"), true, settings)
+	var jobs map[string]models.Job
+	json.Unmarshal(resp, &jobs)
+	return &jobs
+}
